@@ -8,6 +8,7 @@ import Thermal as Th
 import Constant as Cons
 
 from tkinter import *
+from ttkwidgets import CheckboxTreeview
 
 
 # Set element(label, text field, button) as specified position and size
@@ -30,6 +31,7 @@ def make_element(x, y, h, w, element, *args, **kwargs):
 
 
 # Set Command Table
+# TODO: (2024.02.15) CheckBox Change a treeview to CheckTreeView  and event is changed to Double-Button-1, CheckBox is controlled with tag
 def make_table(root: tkinter, column_num: int, width: int, column_title: [string], x: int, y: int, cmd_data: []):
     # Create a table, column is name of column,
     # The displaycolumn shows the order in which the table is executed.
@@ -41,13 +43,14 @@ def make_table(root: tkinter, column_num: int, width: int, column_title: [string
 
     column = [i + 1 for i in range(column_num)]
     dis_column = [str(n) for n in column]
-    tv = tkinter.ttk.Treeview(root, columns=column, displaycolumns=dis_column)
+    tv = CheckboxTreeview(root, columns=dis_column, displaycolumns=dis_column)
+    # tv = tkinter.ttk.Treeview(root, columns=column, displaycolumns=dis_column)
     # Treeview의 width, height 글자 수로 정해 진다.
     tv.configure(height=len(Cons.command_array) + 1)
     tv.place(x=x, y=y)
 
     # Set the Table No Tab
-    tv.column('#0', width=50, anchor='center', stretch='yes')
+    tv.column('#0', width=70, anchor='center', stretch='yes')
     tv.heading('#0', text='No', anchor='center')
 
     # Create each column(name, width, anchor)
@@ -57,11 +60,12 @@ def make_table(root: tkinter, column_num: int, width: int, column_title: [string
 
     # Insert the command data in Table
     for i in range(len(cmd_data)):
-        tv.insert('', 'end', text=i, values=cmd_data[i], iid=str(i) + '번')
+        tv.insert('', 'end', text=i, values=cmd_data[i], iid=str(i) + '번', tags=('unchecked',))
         # CMD Title Left Align
         tv.column(dis_column[0], anchor='w')
         # tv.bind('<<TreeviewSelect>>', selectItem)
-        tv.bind('<<TreeviewSelect>>', lambda event, root_view=root: check_network_Info(event, root_view))
+        # tv.bind('<<TreeviewSelect>>', lambda event, root_view=root: check_network_Info(event, root_view))
+        tv.bind('<Double-Button-1>', lambda event, root_view=root: check_network_Info(event, root_view))
 
 
 def selectItem(event, root_view):
@@ -113,10 +117,9 @@ def get_data_from_csv(file_path) -> [(str, str)]:
 
     return command_data
 
-
 # TODO: Generate exe format
 
-# TODO: CheckBox
+
 # TODO: Interval between command
 # TODO: Command send priority
 # TODO: Check whether sent command was applied
@@ -126,15 +129,3 @@ def get_data_from_csv(file_path) -> [(str, str)]:
 # TODO: Move to point of click (Centering)
 
 # TODO: RTSP
-
-
-
-
-
-
-
-
-
-
-
-

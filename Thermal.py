@@ -9,8 +9,8 @@ import Dialog
 
 
 # Sending Command with hex
-# TODO: 2024.02.14: was applied socket time out
-# TODO: 2024.02.15: was applied dialog box
+# TODO: (2024.02.14) was applied socket time out
+# TODO: (2024.02.15) Dialog box was applied when network error take place
 def send_data(send_cmd, root_view):
     host = Cons.host_ip
     input_port = Cons.port
@@ -23,8 +23,8 @@ def send_data(send_cmd, root_view):
         # client.send(bytearray([0xff, 0x00, 0x21, 0x13, 0x00, 0x01, 0x35]))
         # client.send(bytes([0xff, 0x00, 0x21, 0x13, 0x00, 0x01, 0x35]))
         client.send(bytes(send_cmd))
-        reply, data = client.recv(buf_size)
-        print(reply, data)
+        reply = client.recv(buf_size)
+        print(reply)
     except socket.error as err:
         print(f'network error:{err}')
         dialog_txt = f'Network Error \n Please check a network info.\n {err}'

@@ -25,7 +25,7 @@ class window(Frame):
             Cons.rtsp_port = rtsp_txt_fld.get()
             print(Cons.host_ip, Cons.port, Cons.rtsp_port)
 
-        # TODO: 2024.02.14 Send a specified command for sequentially
+        # TODO: (2024.02.14) Send a specified command for sequentially
         def search_command():
             query = search_txt_fld.get().lower()
             selected_item = []
