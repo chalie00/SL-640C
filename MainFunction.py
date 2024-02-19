@@ -1,14 +1,13 @@
 import string
 import tkinter.ttk
-import openpyxl
-import socket
+from tkinter import *
 
+import openpyxl
+from ttkwidgets import CheckboxTreeview
+
+import Constant as Cons
 import Dialog
 import Thermal as Th
-import Constant as Cons
-
-from tkinter import *
-from ttkwidgets import CheckboxTreeview
 
 
 # Set element(label, text field, button) as specified position and size
@@ -32,7 +31,8 @@ def make_element(x, y, h, w, element, *args, **kwargs):
 
 # Set Command Table
 # TODO: (2024.02.15) CheckBox Change a treeview to CheckTreeView  and event is changed to Double-Button-1, CheckBox is controlled with tag
-def make_table(root: tkinter, column_num: int, width: int, column_title: [string], x: int, y: int, cmd_data: []):
+def make_table(root: tkinter, column_num: int, width: int, column_title: [string], x: int, y: int,
+               cmd_data: []) -> object:
     # Create a table, column is name of column,
     # The displaycolumn shows the order in which the table is executed.
 
@@ -60,12 +60,14 @@ def make_table(root: tkinter, column_num: int, width: int, column_title: [string
 
     # Insert the command data in Table
     for i in range(len(cmd_data)):
-        tv.insert('', 'end', text=i, values=cmd_data[i], iid=str(i) + '번', tags=('unchecked',))
+        tv.insert('', 'end', text=i, values=cmd_data[i], iid=i, tags=('unchecked',))
         # CMD Title Left Align
         tv.column(dis_column[0], anchor='w')
         # tv.bind('<<TreeviewSelect>>', selectItem)
         # tv.bind('<<TreeviewSelect>>', lambda event, root_view=root: check_network_Info(event, root_view))
         tv.bind('<Double-Button-1>', lambda event, root_view=root: check_network_Info(event, root_view))
+
+    return tv
 
 
 def selectItem(event, root_view):
@@ -117,11 +119,23 @@ def get_data_from_csv(file_path) -> [(str, str)]:
 
     return command_data
 
+
+def get_selected_cmd(selected: []):
+    selected_cmd = []
+    selected_item_count = len(selected)
+
+    for i in range(selected_item_count):
+        selected_index = int(selected[i])
+        selected_cmd.append(Cons.command_array[selected_index])
+
+    Cons.selected_array = selected_cmd
+    print(Cons.selected_array)
+
 # TODO: Generate exe format
 
 
 # TODO: Interval between command
-# TODO: Command send priority
+
 # TODO: Check whether sent command was applied
 
 # TODO: PTZ UI (Rudder, Focus, Zoom)

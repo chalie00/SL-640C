@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 from tkinter import *
+from ttkwidgets import CheckboxTreeview
 
 import Constant as Cons
 import MainFunction as Mf
@@ -14,7 +15,8 @@ class window(Frame):
         parent.geometry(f'{Cons.WINDOWS_SIZE["x"]}x{Cons.WINDOWS_SIZE["y"]}+'
                         f'{Cons.WINDOWS_POSITION["x"]}+{Cons.WINDOWS_POSITION["y"]}')
         parent.config(padx=30, pady=30)
-        parent.resizable(width=False, height=False)
+
+        # parent.resizable(width=False, height=False)
 
         # Set UI
         # Get the Network Information from User Input
@@ -36,6 +38,11 @@ class window(Frame):
                     print('searching is completed')
             Mf.make_table(parent, column_count, Cons.treeview_cell_width, column_name, 0, 160, selected_item)
             self.update()
+
+        # TODO: Command send priority
+        def create_sequence_view(box: CheckboxTreeview):
+            checked = box.get_checked()
+            Mf.get_selected_cmd(checked)
 
         # Set Information
         validator_lbl = Label(text='Validator Name', width=Cons.left_label_size, bg=Cons.my_color['fg'], anchor='w')
@@ -94,8 +101,8 @@ class window(Frame):
                                          bg=Cons.search_txt_fld_info['bg'], element='Entry')
         query_txt = search_txt_fld.get()
         search_btn = Mf.make_element(x=Cons.search_btn['x'], y=Cons.search_btn['y'],
-                                     h=Cons.search_btn['h'], w=Cons.search_btn['w'], element='Button',
-                                     text=Cons.search_btn['text'],
+                                     h=Cons.search_btn['h'], w=Cons.search_btn['w'],
+                                     element='Button', text=Cons.search_btn['text'],
                                      anchor='center', command=search_command)
 
         # Set Command Table
@@ -103,7 +110,14 @@ class window(Frame):
         column_count = len(column_name)
         cmd_data = Cons.command_array
 
-        Mf.make_table(parent, column_count, Cons.treeview_cell_width, column_name, 0, 160, cmd_data)
+        cmd_table = Mf.make_table(parent, column_count, Cons.treeview_cell_width, column_name,
+                                  Cons.command_table['x'], Cons.command_table['y'], cmd_data)
+
+        # Set a Sequence Button
+        sequence_btn = Mf.make_element(x=Cons.sequence_btn_info['x'], y=Cons.sequence_btn_info['y'],
+                                       h=Cons.sequence_btn_info['h'], w=Cons.sequence_btn_info['w'],
+                                       element='Button', text=Cons.sequence_btn_info['text'],
+                                       command=lambda box=cmd_table: create_sequence_view(box))
 
 
 if __name__ == '__main__':

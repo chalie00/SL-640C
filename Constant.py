@@ -4,7 +4,7 @@ import MainFunction as Mf
 
 # Set the Application Size, Position with System Resolution
 SYS_RESOLUTION = {'x': 1920, 'y': 1080}
-WINDOWS_SIZE = {'x': 800, 'y': 800}
+WINDOWS_SIZE = {'x': 800, 'y': 850}
 WINDOWS_POSITION = {"x": int((SYS_RESOLUTION['x'] - WINDOWS_SIZE['x']) / 2),
                     "y": int((SYS_RESOLUTION['y'] - WINDOWS_SIZE['y']) / 2)}
 
@@ -53,11 +53,20 @@ register_btn = {'x': rtsp_txt_fld_info['x'] + rtsp_txt_fld_info['w'] / 4,
 
 # Searching UI element position and size
 search_txt_fld_info = {'x': 0, 'y': register_btn['y'] + register_btn['h'] + 10,
-                       'h': ip_lbl_info['h'] + 6, 'w': WINDOWS_SIZE['y'] * 4 / 5,
+                       'h': ip_lbl_info['h'] + 6, 'w': WINDOWS_SIZE['y'] * 5 / 7,
                        'bg': my_color['spare_fir']}
 search_btn = {'x': search_txt_fld_info['x'] + search_txt_fld_info['w'] + 5, 'y': search_txt_fld_info['y'],
               'h': search_txt_fld_info['h'], 'w': WINDOWS_SIZE['y'] * 1 / 10,
-              'bg': my_color['spare_sec'], 'fg': my_color['fg'] , 'text': 'Search'}
+              'bg': my_color['spare_sec'], 'fg': my_color['fg'], 'text': 'Search'}
+
+# Command table position
+command_table = {'x': 0, 'y': search_txt_fld_info['y'] + search_txt_fld_info['h'] + 40}
+treeview_cell_width = int(WINDOWS_SIZE['x'] * 0.2825)
+
+# Sequence position
+sequence_btn_info = {'x': 0, 'y': WINDOWS_SIZE['y'] - 80,
+                     'h': search_txt_fld_info['h'], 'w': WINDOWS_SIZE['y'] * 1 / 10,
+                     'bg': my_color['spare_sec'], 'fg': my_color['fg'], 'text': 'Sequence'}
 
 # Network Information form User Input
 host_ip: str = ""
@@ -67,7 +76,7 @@ buf_size = 4096
 
 # CMD Table(treeview) info
 treeview_pos = {'x': 1, 'y': rtsp_txt_fld_info['y'] + 20}
-treeview_cell_width = int(WINDOWS_SIZE['x'] * 0.2825)
+
 
 normal_coord = {
     'x': 0,
@@ -82,4 +91,9 @@ column_array = ['Function', 'Command', 'Remark']
 #                  ('Color Mode Iron', 'ff002113000236'),
 #                  ('Color Mode Jet', 'ff002113000337'),
 #                  ]
+
+# Command List from CSV File
 command_array = Mf.get_data_from_csv(cmd_path)
+
+# Selected List from checkbox treeview
+selected_array = []
