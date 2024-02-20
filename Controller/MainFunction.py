@@ -5,9 +5,9 @@ from tkinter import *
 import openpyxl
 from ttkwidgets import CheckboxTreeview
 
-import Constant as Cons
-import Dialog
-import Thermal as Th
+from Model import Constant as Cons
+from View import Dialog
+from Controller import Thermal as Th
 
 
 # Set element(label, text field, button) as specified position and size
@@ -110,6 +110,13 @@ def get_data_from_csv(file_path) -> [(str, str)]:
     max_column = sh.max_column
     max_row = sh.max_row
 
+    model = sh.cell(row=1, column=13).value
+    model_type = sh.cell(row=1, column=14).value
+    file_ver = sh.cell(row=1, column=15).value
+    Cons.main_window_title = f'{model} {model_type} Command Test Tool {file_ver}'
+    Cons.command_version = file_ver
+    print(Cons.main_window_title, Cons.command_version)
+
     command_data = []
     for i, row in enumerate(sh.iter_rows(max_col=max_column - 2, max_row=max_row - 2), start=3):
         cmd_title = sh.cell(row=i, column=2).value
@@ -133,13 +140,14 @@ def get_selected_cmd(selected: []):
 
 # TODO: Generate exe format
 
-
 # TODO: Interval between command
-
 # TODO: Check whether sent command was applied
+
 
 # TODO: PTZ UI (Rudder, Focus, Zoom)
 # TODO: Absolute move
 # TODO: Move to point of click (Centering)
 
 # TODO: RTSP
+
+# TODO: (2024.02.20) Separate a file as MVC pattern

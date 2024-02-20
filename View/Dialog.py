@@ -1,6 +1,6 @@
 from tkinter import *
 
-import Constant as Cons
+from Model import Constant as Cons
 
 
 class DialogBox(Toplevel):

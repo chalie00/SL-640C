@@ -1,6 +1,4 @@
-from tkinter import *
-
-import MainFunction as Mf
+from Controller import MainFunction as Mf
 
 # Set the Application Size, Position with System Resolution
 SYS_RESOLUTION = {'x': 1920, 'y': 1080}
@@ -12,6 +10,12 @@ POPUP_SIZE = {'x': int(WINDOWS_SIZE['x'] / 2), 'y': int(WINDOWS_SIZE['y'] / 4)}
 POPUP_POSITION = {'x': int(WINDOWS_POSITION['x'] + WINDOWS_SIZE['x'] / 2 - POPUP_SIZE['x'] / 2),
                   'y': int(WINDOWS_POSITION['y'] + WINDOWS_SIZE['y'] / 2 - POPUP_SIZE['y'] / 2)}
 
+# Set windows title
+main_window_title = ''
+
+# Set applied version of command file
+command_version = ''
+
 my_color = {
     'bg': '#FFF8E3',  # Beige
     'fg': '#F3D7CA',  # Peach
@@ -22,7 +26,8 @@ my_color = {
 }
 
 # Command File Position
-cmd_path = rf'Command/Command.xlsx'
+# absolute path for mac cmd_path = rf'/Users/chalie/Desktop/Python/SL-640C/Command/Command.xlsx'
+cmd_path = './Command/Command.xlsx'
 
 # Network information element position and size
 left_label_size = int(WINDOWS_SIZE['x'] * 0.01875)
@@ -56,17 +61,27 @@ search_txt_fld_info = {'x': 0, 'y': register_btn['y'] + register_btn['h'] + 10,
                        'h': ip_lbl_info['h'] + 6, 'w': WINDOWS_SIZE['y'] * 5 / 7,
                        'bg': my_color['spare_fir']}
 search_btn = {'x': search_txt_fld_info['x'] + search_txt_fld_info['w'] + 5, 'y': search_txt_fld_info['y'],
-              'h': search_txt_fld_info['h'], 'w': WINDOWS_SIZE['y'] * 1 / 10,
+              'h': search_txt_fld_info['h'], 'w': WINDOWS_SIZE['y'] * 2 / 30,
               'bg': my_color['spare_sec'], 'fg': my_color['fg'], 'text': 'Search'}
 
+# Command file import UI element position and size
+import_btn_info = {'x': search_btn['x'] + search_btn['w'], 'y': search_btn['y'],
+                   'h': search_btn['h'], 'w': WINDOWS_SIZE['y'] * 2 / 30,
+                   'bg': my_color['spare_sec'], 'fg': my_color['fg'], 'text': 'Import'}
+
 # Command table position
-command_table = {'x': 0, 'y': search_txt_fld_info['y'] + search_txt_fld_info['h'] + 40}
+command_table = {'x': 0, 'y': search_txt_fld_info['y'] + search_txt_fld_info['h'] + 5}
 treeview_cell_width = int(WINDOWS_SIZE['x'] * 0.2825)
 
 # Sequence position
 sequence_btn_info = {'x': 0, 'y': WINDOWS_SIZE['y'] - 80,
                      'h': search_txt_fld_info['h'], 'w': WINDOWS_SIZE['y'] * 1 / 10,
                      'bg': my_color['spare_sec'], 'fg': my_color['fg'], 'text': 'Sequence'}
+
+# Version position
+ver_lbl_info = {'x': sequence_btn_info['x'] + sequence_btn_info['w'] + 10, 'y': WINDOWS_SIZE['y'] - 80,
+                'h': sequence_btn_info['h'], 'w': WINDOWS_SIZE['y'] * 2 / 10,
+                'bg': my_color['spare_fir'], 'fg': 'black', 'text': command_version}
 
 # Network Information form User Input
 host_ip: str = ""
@@ -76,7 +91,6 @@ buf_size = 4096
 
 # CMD Table(treeview) info
 treeview_pos = {'x': 1, 'y': rtsp_txt_fld_info['y'] + 20}
-
 
 normal_coord = {
     'x': 0,

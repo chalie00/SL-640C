@@ -1,11 +1,11 @@
 import socket
 import logging
 
-import Constant as Cons
+from Model import Constant as Cons
 
 from socket import AF_INET, SOCK_STREAM
 
-import Dialog
+from View import Dialog
 
 
 # Sending Command with hex
